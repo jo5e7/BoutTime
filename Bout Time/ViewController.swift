@@ -15,9 +15,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var event1Label: UILabel!
     @IBOutlet weak var event2Label: UILabel!
     @IBOutlet weak var event3Label: UILabel!
+    @IBOutlet weak var shakeToCompleteLabel: UILabel!
     @IBOutlet weak var countDownLabel: UILabel!
+    @IBOutlet weak var finalScoreLabel: UILabel!
     
     @IBOutlet weak var nextRoundButton: UIButton!
+    @IBOutlet weak var playAgainButton: UIButton!
+    @IBOutlet weak var down0Button: UIButton!
+    @IBOutlet weak var up1Button: UIButton!
+    @IBOutlet weak var down1Button: UIButton!
+    @IBOutlet weak var up2Button: UIButton!
+    @IBOutlet weak var down2Button: UIButton!
+    @IBOutlet weak var up3Button: UIButton!
+    
+    @IBOutlet weak var finalScoreView: UIView!
+    
+    
     
     var eventList = EventList().eventsArray
     var roundEventArray = [Event]()
@@ -35,22 +48,7 @@ class ViewController: UIViewController {
         startTimer()
         
     }
-    
-    func startTimer() {
-        timerCount = 60
-        countDownLabel.text = "60"
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-    }
-    
-    func update() {
-        if(timerCount > 0) {
-            timerCount -= 1
-            countDownLabel.text = String(timerCount)
-        }else{
-            //Time is out, end of the round
-            qualyfyRound()
-        }
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -61,7 +59,7 @@ class ViewController: UIViewController {
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake{
             //Do something
-            qualyfyRound()
+            qualifyRound()
         }
         
     }
@@ -168,12 +166,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction func nextRoundAction() {
-        populateRound()
-        self.nextRoundButton.isHidden = true
-        startTimer()
+        if roundsPerGame == roundsPlayed {
+            self.finalScoreLabel.text = "\(roundsSuccessful)/\(roundsPerGame)"
+            setUpViewsForFinalScore()
+        }else{
+            populateRound()
+            self.nextRoundButton.isHidden = true
+            startTimer()
+        }
     }
     
-    func qualyfyRound() {
+    @IBAction func playAgainAction() {
+        setUpViewsForGame()
+        roundsPlayed = 0
+        roundsSuccessful = 0
+        populateRound()
+    }
+    
+    func qualifyRound() {
         let roundResult = checkEventsOrder()
         self.roundsPlayed += 1
         self.nextRoundButton.isHidden = false
@@ -190,5 +200,62 @@ class ViewController: UIViewController {
         
     }
     
+    
+    func startTimer() {
+        timerCount = 60
+        countDownLabel.text = "60"
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+    }
+    
+    func update() {
+        if(timerCount > 0) {
+            timerCount -= 1
+            countDownLabel.text = String(timerCount)
+        }else{
+            //Time is out, end of the round
+            qualifyRound()
+        }
+    }
+    
+    func setUpViewsForGame() {
+        self.event0Label.isHidden = false
+        self.event1Label.isHidden = false
+        self.event2Label.isHidden = false
+        self.event3Label.isHidden = false
+        
+        self.down0Button.isHidden = false
+        self.down1Button.isHidden = false
+        self.down2Button.isHidden = false
+        self.up1Button.isHidden = false
+        self.up2Button.isHidden = false
+        self.up3Button.isHidden = false
+        
+        self.countDownLabel.isHidden  = false
+        self.shakeToCompleteLabel.isHidden = false
+        
+        self.nextRoundButton.isHidden = true
+        self.finalScoreView.isHidden = true
+        
+    }
+    
+    func setUpViewsForFinalScore() {
+        self.event0Label.isHidden = true
+        self.event1Label.isHidden = true
+        self.event2Label.isHidden = true
+        self.event3Label.isHidden = true
+        
+        self.down0Button.isHidden = true
+        self.down1Button.isHidden = true
+        self.down2Button.isHidden = true
+        self.up1Button.isHidden = true
+        self.up2Button.isHidden = true
+        self.up3Button.isHidden = true
+        
+        self.countDownLabel.isHidden  = true
+        self.nextRoundButton.isHidden = true
+        self.shakeToCompleteLabel.isHidden = true
+        
+        self.finalScoreView.isHidden = false
+    }
 }
 
