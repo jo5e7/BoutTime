@@ -180,6 +180,7 @@ class ViewController: UIViewController {
         setUpViewsForGame()
         roundsPlayed = 0
         roundsSuccessful = 0
+        startTimer()
         populateRound()
     }
     
@@ -197,6 +198,10 @@ class ViewController: UIViewController {
             let image = UIImage (named: "next_round_fail")
             self.nextRoundButton .setImage(image, for: .normal)
         }
+        //If is last round go directly to results
+        if roundsPlayed == roundsPerGame {
+            nextRoundAction()
+        }
         
     }
     
@@ -204,10 +209,10 @@ class ViewController: UIViewController {
     func startTimer() {
         timerCount = 60
         countDownLabel.text = "60"
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
-    func update() {
+    func updateTimer() {
         if(timerCount > 0) {
             timerCount -= 1
             countDownLabel.text = String(timerCount)
