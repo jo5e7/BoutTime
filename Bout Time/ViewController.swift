@@ -17,11 +17,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var event3Label: UILabel!
     @IBOutlet weak var countDownLabel: UILabel!
     
+    @IBOutlet weak var nextRoundButton: UIButton!
+    
     var eventList = EventList().eventsArray
     var roundEventArray = [Event]()
     var timer:Timer? = nil
     
-    var count = 0
+    var timerCount = 0
+    let roundsPerGame = 6
+    var roundsPlayed = 0
+    var roundsSuccessful = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,20 +37,18 @@ class ViewController: UIViewController {
     }
     
     func startTimer() {
-        count = 10
+        timerCount = 60
         countDownLabel.text = "60"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
-    func update(timer:Timer) {
-        if(count > 0) {
-            count -= 1
-            countDownLabel.text = String(count)
+    func update() {
+        if(timerCount > 0) {
+            timerCount -= 1
+            countDownLabel.text = String(timerCount)
         }else{
             //Time is out, end of the round
-            let result = checkEventsOrder()
-            print(result)
-            timer.invalidate()
+            qualyfyRound()
         }
     }
 
@@ -53,9 +56,20 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //Shake gesture
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
+            //Do something
+            qualyfyRound()
+        }
+        
+    }
 
     func populateRound() {
-      
+        roundEventArray .removeAll()
+      //Repopulate the array of events
+        eventList = EventList().eventsArray
         for label in 0...3 {
             let eventNumber = GKRandomSource.sharedRandom().nextInt(upperBound: eventList.count)
             let event = eventList[eventNumber]
@@ -76,9 +90,11 @@ class ViewController: UIViewController {
             default:
                 break
             }
+            //Remove the event of the array to avoid reapeted event at the same round
+            eventList.remove(at: eventNumber)
         }
     }
-    
+    //Move event down in game
     @IBAction func upEventAction(_ sender: UIButton) {
         let tag = sender.tag
         
@@ -96,7 +112,7 @@ class ViewController: UIViewController {
             break
         }
     }
-    
+    //Move event up in game
     @IBAction func downEventAction(_ sender: UIButton) {
         let tag = sender.tag
         
@@ -115,8 +131,6 @@ class ViewController: UIViewController {
         }
      
     }
-
-    
     
     func changeLabelPosition(label:UILabel, withLabel:UILabel) {
         let labelText = label.text
@@ -152,5 +166,29 @@ class ViewController: UIViewController {
         }
         return result
     }
+    
+    @IBAction func nextRoundAction() {
+        populateRound()
+        self.nextRoundButton.isHidden = true
+        startTimer()
+    }
+    
+    func qualyfyRound() {
+        let roundResult = checkEventsOrder()
+        self.roundsPlayed += 1
+        self.nextRoundButton.isHidden = false
+        self.timer?.invalidate()
+        
+        if roundResult == true {
+            let image = UIImage (named: "next_round_success")
+            self.nextRoundButton .setImage(image, for: .normal)
+            self.roundsSuccessful += 1
+        }else{
+            let image = UIImage (named: "next_round_fail")
+            self.nextRoundButton .setImage(image, for: .normal)
+        }
+        
+    }
+    
 }
 
