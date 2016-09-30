@@ -17,7 +17,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkU-RR-Qdc">
@@ -71,6 +71,8 @@
                                     <constraint firstAttribute="width" secondItem="fl9-F7-RvC" secondAttribute="height" multiplier="3:5" id="vTt-mN-dKX"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="down_full"/>
+                                <state key="selected" image="down_full_selected"/>
+                                <state key="highlighted" image="down_full_selected"/>
                                 <connections>
                                     <action selector="downEventAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HBd-MF-KGE"/>
                                 </connections>
@@ -90,6 +92,8 @@
                                     <constraint firstAttribute="width" secondItem="csz-8O-3sY" secondAttribute="height" multiplier="6:5" id="Be1-R9-Jzv"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="down_half"/>
+                                <state key="selected" image="down_half_selected"/>
+                                <state key="highlighted" image="down_half_selected"/>
                                 <connections>
                                     <action selector="downEventAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gtV-Dt-yHz"/>
                                 </connections>
@@ -100,6 +104,8 @@
                                     <constraint firstAttribute="height" constant="50" id="oq1-cd-oRb"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="up_half"/>
+                                <state key="selected" image="up_half_selected"/>
+                                <state key="highlighted" image="up_half_selected"/>
                                 <connections>
                                     <action selector="upEventAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wai-oH-QaI"/>
                                 </connections>
@@ -119,6 +125,8 @@
                                     <constraint firstAttribute="width" secondItem="M39-vD-Rg7" secondAttribute="height" multiplier="6:5" id="Ny3-3i-C0A"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="down_half"/>
+                                <state key="selected" image="down_half_selected"/>
+                                <state key="highlighted" image="down_half_selected"/>
                                 <connections>
                                     <action selector="downEventAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pPy-22-nWO"/>
                                 </connections>
@@ -129,6 +137,8 @@
                                     <constraint firstAttribute="width" secondItem="f9U-YO-2up" secondAttribute="height" multiplier="6:5" id="o3b-bq-vcs"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="up_half"/>
+                                <state key="selected" image="up_half_selected"/>
+                                <state key="highlighted" image="up_half_selected"/>
                                 <connections>
                                     <action selector="upEventAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ryf-UN-KNk"/>
                                 </connections>
@@ -149,6 +159,8 @@
                                     <constraint firstAttribute="height" constant="100" id="FIu-b8-LyM"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="up_full"/>
+                                <state key="selected" image="up_full_selected"/>
+                                <state key="highlighted" image="up_full_selected"/>
                                 <connections>
                                     <action selector="upEventAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="x9J-qJ-Dc9"/>
                                 </connections>
@@ -245,10 +257,14 @@
     </scenes>
     <resources>
         <image name="down_full" width="158" height="457"/>
+        <image name="down_full_selected" width="158" height="457"/>
         <image name="down_half" width="158" height="229"/>
+        <image name="down_half_selected" width="158" height="229"/>
         <image name="next_round_fail" width="558" height="142"/>
         <image name="play_again" width="450" height="142"/>
         <image name="up_full" width="158" height="457"/>
+        <image name="up_full_selected" width="158" height="457"/>
         <image name="up_half" width="158" height="229"/>
+        <image name="up_half_selected" width="158" height="229"/>
     </resources>
 </document>
